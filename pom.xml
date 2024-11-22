@@ -68,6 +68,7 @@ under the License.
         <module>paimon-service</module>
         <module>paimon-test-utils</module>
         <module>tools/ci/paimon-ci-tools</module>
+        <module>paimon-learning</module>
     </modules>
 
     <properties>
