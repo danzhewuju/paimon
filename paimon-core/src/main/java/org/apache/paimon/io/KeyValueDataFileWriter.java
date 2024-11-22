@@ -104,6 +104,7 @@ public class KeyValueDataFileWriter
 
     @Override
     public void write(KeyValue kv) throws IOException {
+        // 实际的文件写入
         super.write(kv);
 
         updateMinKey(kv);

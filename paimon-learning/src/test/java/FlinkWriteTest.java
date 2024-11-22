@@ -39,6 +39,8 @@ public class FlinkWriteTest {
 
     @Test
     public void testPaimonWrite() {
+        String host = "192.168.31.85";
+
         Configuration configuration = new Configuration();
         configuration.setInteger("rest.port", 8081);
         configuration.setString("execution.runtime-mode", "streaming");
@@ -46,24 +48,25 @@ public class FlinkWriteTest {
         configuration.setString("execution.checkpointing.mode", "EXACTLY_ONCE");
         configuration.setLong("execution.checkpointing.interval", 10000l);
         configuration.setString("execution.checkpointing.timeout", "10min");
-        configuration.setString("execution.checkpointing.min-pause", "1min");
+        configuration.setString("execution.checkpointing.min-pause", "10s");
         configuration.setString("execution.checkpointing.externalized-checkpoint-retention", "RETAIN_ON_CANCELLATION");
         configuration.setString("execution.checkpointing.tolerable-failed-checkpoints", "100000");
         configuration.setString("execution.checkpointing.max-concurrent-checkpoints", "1");
-        configuration.setString("state.checkpoints.dir", "hdfs://localhost:9000/flink/checkpoints");
-        configuration.setString("state.savepoints.dir", "hdfs://localhost:9000/flink/savepoints");
+        configuration.setString("state.checkpoints.dir", String.format("hdfs://%s:9000/flink/checkpoint", host));
+        configuration.setString("state.savepoints.dir", String.format("hdfs://%s:9000/flink/savepoint", host));
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment(configuration);
-        env.setParallelism(1);
+        env.setParallelism(4);
         env.enableCheckpointing(10000l);
         TableEnvironment tableEnv = StreamTableEnvironment.create(env, EnvironmentSettings.newInstance().inStreamingMode().build());
 
         tableEnv.executeSql("CREATE CATALOG hadoop_catalog WITH (\n" +
                 " 'type'='paimon',\n" +
-                " 'warehouse'='file:///Users/alex/Program/data/paimon/warehouse'\n" +
+                " 'warehouse'='hdfs://192.168.31.85:9000/data/paimon/warehouse'\n" +
                 ")");
 
         tableEnv.executeSql("use catalog hadoop_catalog");
+        tableEnv.executeSql("create database if not exists paimon_test");
         tableEnv.executeSql("use paimon_test");
 
         // paimon====================================================================

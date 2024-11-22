@@ -70,6 +70,7 @@ public class RollingFileWriter<T, R> implements FileWriter<T, List<R>> {
                 recordCount % CHECK_ROLLING_RECORD_CNT == 0, targetFileSize);
     }
 
+    // 文件写入
     @Override
     public void write(T row) throws IOException {
         try {
