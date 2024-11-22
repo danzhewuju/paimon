@@ -29,6 +29,7 @@ import org.apache.paimon.utils.SnapshotManager;
 
 import org.apache.paimon.shade.guava30.com.google.common.collect.ImmutableList;
 
+import org.apache.flink.configuration.Configuration;
 import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.api.config.ExecutionConfigOptions;
 import org.apache.flink.table.api.internal.TableEnvironmentImpl;
@@ -67,9 +68,12 @@ public abstract class CatalogITCaseBase extends AbstractTestBase {
 
     @BeforeEach
     public void before() throws IOException {
-        tEnv = tableEnvironmentBuilder().batchMode().build();
+        Configuration configuration = new Configuration();
+        configuration.setString("heartbeat.timeout", "300000");
+        tEnv = tableEnvironmentBuilder().batchMode().setConf(configuration).build();
         String catalog = "PAIMON";
         path = getTempDirPath();
+        System.out.println("Tmp path: " + path);
         String inferScan =
                 !inferScanParallelism() ? ",\n'table-default.scan.infer-parallelism'='false'" : "";
 
@@ -101,7 +105,7 @@ public abstract class CatalogITCaseBase extends AbstractTestBase {
         return false;
     }
 
-    private void prepareEnv() {
+    public void prepareEnv() {
         Parser parser = ((TableEnvironmentImpl) tEnv).getParser();
         for (String ddl : ddl()) {
             tEnv.executeSql(ddl);

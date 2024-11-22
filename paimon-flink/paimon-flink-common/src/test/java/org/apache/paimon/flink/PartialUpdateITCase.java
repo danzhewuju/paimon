@@ -210,6 +210,29 @@ public class PartialUpdateITCase extends CatalogITCaseBase {
     }
 
     @Test
+    public void testSequenceGroupAndAggregation() {
+        sql(
+                "CREATE TABLE SG ("
+                        + "k INT, a INT, b INT, g_1 TIMESTAMP(6), PRIMARY KEY (k) NOT ENFORCED)"
+                        + " WITH ("
+                        + "'merge-engine'='partial-update', "
+                        + "'fields.g_1.sequence-group'='a,b',"
+                        + "'fields.default-aggregate-function' = 'last_non_null_value',"
+                        + "'changelog-producer'='lookup')");
+        //
+        sql("INSERT INTO SG VALUES (1, 1, 1, cast('2000-01-01 00:00:00' as timestamp))");
+        System.out.println(sql("SELECT * FROM SG"));
+        sql(
+                "INSERT INTO SG VALUES (1, cast(null as int), cast(null as int), cast('2000-01-01 00:00:00' as timestamp))");
+        System.out.println(sql("SELECT * FROM SG"));
+        //        sql("INSERT INTO SG VALUES (1, 3, 3, -1)");
+        //        System.out.println(sql("SELECT * FROM SG"));
+
+        //        System.out.println(sql("select "));
+
+    }
+
+    @Test
     public void testMultiFieldsSequenceGroup() {
         sql(
                 "CREATE TABLE SG ("
