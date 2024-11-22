@@ -48,6 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -1765,6 +1766,114 @@ public class PreAggregationITCase {
 
             assertThat(sql("SELECT * FROM test_collect"))
                     .containsExactly(Row.of(1, new String[] {"A", "B"}, 3));
+        }
+
+        @Test
+        public void testSequenceGroupAndAggregationWithUpdate()
+                throws ExecutionException, InterruptedException {
+            sql(
+                    "CREATE TABLE SG ("
+                            + "k BIGINT, a BIGINT, b BIGINT, g_1 BIGINT, g_2 BIGINT, PRIMARY KEY (k) NOT ENFORCED)"
+                            + " WITH ("
+                            + "'merge-engine'='partial-update', "
+                            + "'fields.g_1,g_2.sequence-group'='a,b',"
+                            + "'changelog-producer'='lookup',"
+                            + "'fields.default-aggregate-function'='last_non_null_value');");
+
+            List<Row> input =
+                    Arrays.asList(
+                            Row.ofKind(RowKind.INSERT, 1L, null, null, -3L, 1749113116L),
+                            Row.ofKind(RowKind.INSERT, 1L, null, 200L, -2L, 1749113116L),
+                            Row.ofKind(RowKind.UPDATE_BEFORE, 1L, null, 200L, -2L, 1749113116L),
+                            Row.ofKind(RowKind.UPDATE_AFTER, 1L, 100L, 600L, -2L, 1749113346L),
+                            Row.ofKind(RowKind.UPDATE_BEFORE, 1L, null, null, -3L, 1749113116L),
+                            Row.ofKind(RowKind.UPDATE_AFTER, 1L, null, null, -3L, 1749113346L));
+
+            sEnv.executeSql(
+                    String.format(
+                            "CREATE TEMPORARY TABLE input ("
+                                    + "  k BIGINT PRIMARY KEY NOT ENFORCED,"
+                                    + "  a BIGINT,"
+                                    + "  b BIGINT,"
+                                    + "  g_1 BIGINT,"
+                                    + "  g_2 BIGINT"
+                                    + ") WITH ("
+                                    + "  'connector' = 'values',"
+                                    + "  'data-id' = '%s',"
+                                    + "  'bounded' = 'true',"
+                                    + "  'changelog-mode' = 'UB,UA'"
+                                    + ")",
+                            TestValuesTableFactory.registerData(input)));
+            sEnv.executeSql("INSERT INTO SG SELECT * FROM input").await();
+            System.out.println(sql("SELECT * FROM SG"));
+        }
+
+        @Test
+        public void testRetract() throws Exception {
+            sql(
+                    "CREATE TABLE test_sum ("
+                            + "  id INT PRIMARY KEY NOT ENFORCED,"
+                            + "  f0 INT,"
+                            + "  f1 STRING"
+                            + ") WITH ("
+                            + "  'changelog-producer' = 'lookup',"
+                            + "  'merge-engine' = 'aggregation',"
+                            + "  'fields.f0.aggregate-function' = 'sum'"
+                            //                            + "  'fields.f1.sequence-group' = 'f0'"
+                            + ")");
+
+            List<Row> input =
+                    Arrays.asList(
+                            Row.ofKind(RowKind.INSERT, 1, 1, "1"),
+                            Row.ofKind(RowKind.INSERT, 1, 3, "2"));
+            sEnv.executeSql(
+                            String.format(
+                                    "CREATE TEMPORARY TABLE input ("
+                                            + "  id INT PRIMARY KEY NOT ENFORCED,"
+                                            + "  f0 INT,"
+                                            + "  f1 STRING"
+                                            + ") WITH ("
+                                            + "  'connector' = 'values',"
+                                            + "  'data-id' = '%s',"
+                                            + "  'bounded' = 'true',"
+                                            + "  'changelog-mode' = 'UB,UA'"
+                                            + ")",
+                                    TestValuesTableFactory.registerData(input)))
+                    .await();
+            sEnv.executeSql("INSERT INTO test_sum SELECT * FROM input").await();
+
+            List<Row> result = sql("SELECT * FROM test_sum");
+            result.forEach(
+                    r -> {
+                        System.out.println(r.toString());
+                    });
+
+            System.out.println("--contains upsert--");
+
+            List<Row> input1 =
+                    Arrays.asList(
+                            Row.ofKind(RowKind.UPDATE_BEFORE, 1, 3, "2"),
+                            Row.ofKind(RowKind.UPDATE_AFTER, 1, 1, "3"));
+
+            sEnv.executeSql(
+                    String.format(
+                            "CREATE TEMPORARY TABLE input1 ("
+                                    + "  id INT PRIMARY KEY NOT ENFORCED,"
+                                    + "  f0 INT,"
+                                    + "  f1 STRING"
+                                    + ") WITH ("
+                                    + "  'connector' = 'values',"
+                                    + "  'data-id' = '%s',"
+                                    + "  'bounded' = 'true',"
+                                    + "  'changelog-mode' = 'UB,UA'"
+                                    + ")",
+                            TestValuesTableFactory.registerData(input1)));
+            sEnv.executeSql("INSERT INTO test_sum SELECT * FROM input1").await();
+            List<Row> result1 = sql("SELECT * FROM test_sum");
+            result1.forEach(
+                    r -> {
+                        System.out.println(r.toString());
+                    });
         }
 
         private void checkOneRecord(Row row, int id, String... elements) {

@@ -130,4 +130,14 @@ public class DynamicBucketTableITCase extends CatalogITCaseBase {
 
         catalog.close();
     }
+
+    @Test
+    public void testBatchWriteReadDelete() {
+        sql("INSERT INTO T VALUES (1, 1, 1), (1, 2, 2), (1, 3, 3), (1, 4, 4), (1, 5, 5)");
+        sql("DELETE FROM T WHERE pt = 1 AND pk = 3");
+        sql("CALL `PAIMON`.sys.create_tag('default.T', 'tag-1');");
+        List<Row> result = sql("SELECT * FROM T");
+        result.forEach(r -> System.out.println("Row: " + r));
+        System.out.println("End Test!");
+    }
 }
