@@ -240,6 +240,7 @@ public class MergeTreeWriter implements RecordWriter<KeyValue>, MemoryOwner {
         }
 
         trySyncLatestCompaction(waitForLatestCompaction);
+        // flush 触发一下合并操作
         compactManager.triggerCompaction(forcedFullCompaction);
     }
 

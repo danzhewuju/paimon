@@ -233,10 +233,14 @@ public class SortBufferWriteBuffer implements WriteBuffer {
                 if (previousRow == null) {
                     return;
                 }
+                // latest kv 设置为null
                 mergeFunctionWrapper.reset();
+
+                //  latest kv 设置为previous kv
                 mergeFunctionWrapper.add(previous.getReusedKv());
 
                 while (readOnce()) {
+                    // key 如果不相等就break
                     if (keyComparator.compare(
                                     previous.getReusedKv().key(), current.getReusedKv().key())
                             != 0) {
