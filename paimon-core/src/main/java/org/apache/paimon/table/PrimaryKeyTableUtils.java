@@ -57,6 +57,7 @@ public class PrimaryKeyTableUtils {
         CoreOptions.MergeEngine mergeEngine = options.mergeEngine();
 
         switch (mergeEngine) {
+                // 默认创建的是DeduplicateMergeFunction
             case DEDUPLICATE:
                 return DeduplicateMergeFunction.factory(conf);
             case PARTIAL_UPDATE:
