@@ -21,20 +21,23 @@ package org.apache.paimon.rest;
 import org.apache.paimon.catalog.Identifier;
 import org.apache.paimon.partition.Partition;
 import org.apache.paimon.rest.requests.AlterDatabaseRequest;
+import org.apache.paimon.rest.requests.AlterPartitionsRequest;
 import org.apache.paimon.rest.requests.AlterTableRequest;
 import org.apache.paimon.rest.requests.CreateDatabaseRequest;
-import org.apache.paimon.rest.requests.CreatePartitionRequest;
+import org.apache.paimon.rest.requests.CreatePartitionsRequest;
 import org.apache.paimon.rest.requests.CreateTableRequest;
-import org.apache.paimon.rest.requests.DropPartitionRequest;
+import org.apache.paimon.rest.requests.CreateViewRequest;
+import org.apache.paimon.rest.requests.DropPartitionsRequest;
 import org.apache.paimon.rest.requests.RenameTableRequest;
 import org.apache.paimon.rest.responses.AlterDatabaseResponse;
 import org.apache.paimon.rest.responses.CreateDatabaseResponse;
 import org.apache.paimon.rest.responses.GetDatabaseResponse;
 import org.apache.paimon.rest.responses.GetTableResponse;
+import org.apache.paimon.rest.responses.GetViewResponse;
 import org.apache.paimon.rest.responses.ListDatabasesResponse;
 import org.apache.paimon.rest.responses.ListPartitionsResponse;
 import org.apache.paimon.rest.responses.ListTablesResponse;
-import org.apache.paimon.rest.responses.PartitionResponse;
+import org.apache.paimon.rest.responses.ListViewsResponse;
 import org.apache.paimon.schema.Schema;
 import org.apache.paimon.schema.SchemaChange;
 import org.apache.paimon.types.DataField;
@@ -42,11 +45,10 @@ import org.apache.paimon.types.DataType;
 import org.apache.paimon.types.DataTypes;
 import org.apache.paimon.types.IntType;
 import org.apache.paimon.types.RowType;
+import org.apache.paimon.view.ViewSchema;
 
 import org.apache.paimon.shade.guava30.com.google.common.collect.ImmutableList;
 import org.apache.paimon.shade.guava30.com.google.common.collect.Lists;
-
-import okhttp3.mockwebserver.MockResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,32 +128,28 @@ public class MockRESTMessage {
         return new CreateTableRequest(identifier, schema);
     }
 
-    public static RenameTableRequest renameRequest(String toTableName) {
-        Identifier newIdentifier = Identifier.create(databaseName(), toTableName);
-        return new RenameTableRequest(newIdentifier);
+    public static RenameTableRequest renameRequest(String sourceTable, String toTableName) {
+        Identifier source = Identifier.create(databaseName(), sourceTable);
+        Identifier destination = Identifier.create(databaseName(), toTableName);
+        return new RenameTableRequest(source, destination);
     }
 
     public static AlterTableRequest alterTableRequest() {
         return new AlterTableRequest(getChanges());
     }
 
-    public static CreatePartitionRequest createPartitionRequest(String tableName) {
-        Identifier identifier = Identifier.create(databaseName(), tableName);
-        return new CreatePartitionRequest(identifier, Collections.singletonMap("pt", "1"));
+    public static CreatePartitionsRequest createPartitionRequest() {
+        return new CreatePartitionsRequest(ImmutableList.of(Collections.singletonMap("pt", "1")));
     }
 
-    public static DropPartitionRequest dropPartitionRequest() {
-        return new DropPartitionRequest(Collections.singletonMap("pt", "1"));
-    }
-
-    public static PartitionResponse partitionResponse() {
-        Map<String, String> spec = new HashMap<>();
-        spec.put("f0", "1");
-        return new PartitionResponse(new Partition(spec, 1, 1, 1, 1));
+    public static DropPartitionsRequest dropPartitionsRequest() {
+        return new DropPartitionsRequest(ImmutableList.of(Collections.singletonMap("pt", "1")));
     }
 
     public static ListPartitionsResponse listPartitionsResponse() {
-        Partition partition = partitionResponse().getPartition();
+        Map<String, String> spec = new HashMap<>();
+        spec.put("f0", "1");
+        Partition partition = new Partition(spec, 1, 1, 1, 1);
         return new ListPartitionsResponse(ImmutableList.of(partition));
     }
 
@@ -233,11 +231,37 @@ public class MockRESTMessage {
         return new GetTableResponse(UUID.randomUUID().toString(), "", 1, schema(options));
     }
 
-    public static MockResponse mockResponse(String body, int httpCode) {
-        return new MockResponse()
-                .setResponseCode(httpCode)
-                .setBody(body)
-                .addHeader("Content-Type", "application/json");
+    public static AlterPartitionsRequest alterPartitionsRequest() {
+        return new AlterPartitionsRequest(ImmutableList.of(partition()));
+    }
+
+    public static CreateViewRequest createViewRequest(String name) {
+        Identifier identifier = Identifier.create(databaseName(), name);
+        return new CreateViewRequest(identifier, viewSchema());
+    }
+
+    public static GetViewResponse getViewResponse() {
+        return new GetViewResponse(UUID.randomUUID().toString(), "", viewSchema());
+    }
+
+    public static ListViewsResponse listViewsResponse() {
+        return new ListViewsResponse(ImmutableList.of("view"));
+    }
+
+    private static ViewSchema viewSchema() {
+        List<DataField> fields =
+                Arrays.asList(
+                        new DataField(0, "f0", new IntType()),
+                        new DataField(1, "f1", new IntType()));
+        return new ViewSchema(
+                new RowType(fields),
+                Collections.singletonMap("pt", "1"),
+                "comment",
+                "select * from t1");
+    }
+
+    private static Partition partition() {
+        return new Partition(Collections.singletonMap("pt", "1"), 1, 1, 1, 1);
     }
 
     private static Schema schema(Map<String, String> options) {
