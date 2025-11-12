@@ -65,4 +65,12 @@ public class RowDataChannelComputer implements ChannelComputer<InternalRow> {
     public String toString() {
         return "shuffle by bucket";
     }
+
+    public int getNumChannels() {
+        return numChannels;
+    }
+
+    public boolean isHasLogSink() {
+        return hasLogSink;
+    }
 }

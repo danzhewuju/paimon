@@ -441,6 +441,14 @@ public class FlinkConnectorOptions {
                                     + "${UID_PREFIX}_${TABLE_NAME}_${USER_UID_SUFFIX}. If the uid suffix is not set, flink will "
                                     + "automatically generate the operator uid, which may be incompatible when the topology changes.");
 
+    public static final ConfigOption<Boolean> SINK_ENABLE_RANDOM_CHANNEL_SELECTOR =
+            key("sink.enable-random-channel-selector")
+                    .booleanType()
+                    .defaultValue(false)
+                    .withDescription(
+                            "If true, the sink will use RandomChannelSelector to distribute data to downstream tasks. "
+                                    + "This can help to avoid data skew when writing to the sink.");
+
     public static List<ConfigOption<?>> getOptions() {
         final Field[] fields = FlinkConnectorOptions.class.getFields();
         final List<ConfigOption<?>> list = new ArrayList<>(fields.length);

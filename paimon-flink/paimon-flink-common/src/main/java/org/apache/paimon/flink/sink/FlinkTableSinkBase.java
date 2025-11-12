@@ -49,6 +49,7 @@ import static org.apache.paimon.flink.FlinkConnectorOptions.CLUSTERING_COLUMNS;
 import static org.apache.paimon.flink.FlinkConnectorOptions.CLUSTERING_SAMPLE_FACTOR;
 import static org.apache.paimon.flink.FlinkConnectorOptions.CLUSTERING_SORT_IN_CLUSTER;
 import static org.apache.paimon.flink.FlinkConnectorOptions.CLUSTERING_STRATEGY;
+import static org.apache.paimon.flink.FlinkConnectorOptions.SINK_ENABLE_RANDOM_CHANNEL_SELECTOR;
 import static org.apache.paimon.flink.FlinkConnectorOptions.SINK_PARALLELISM;
 
 /** Table sink to create sink. */
@@ -144,6 +145,8 @@ public abstract class FlinkTableSinkBase
                         builder.overwrite(staticPartitions);
                     }
                     conf.getOptional(SINK_PARALLELISM).ifPresent(builder::parallelism);
+                    conf.getOptional(SINK_ENABLE_RANDOM_CHANNEL_SELECTOR)
+                            .ifPresent(builder::setEnableRandomChannelSelector);
                     return builder.build();
                 });
     }

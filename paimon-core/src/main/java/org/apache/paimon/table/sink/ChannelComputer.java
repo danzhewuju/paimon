@@ -39,6 +39,11 @@ public interface ChannelComputer<T> extends Serializable {
         return (startChannel + bucket) % numChannels;
     }
 
+    static int select(BinaryRow partition, int bucket, int numChannels, int randomStartIndex) {
+        int startChannel = (Math.abs(partition.hashCode()) + randomStartIndex) % numChannels;
+        return (startChannel + bucket) % numChannels;
+    }
+
     static int select(int bucket, int numChannels) {
         return bucket % numChannels;
     }

@@ -85,6 +85,8 @@ public class FlinkSinkBuilder {
     protected boolean compactSink = false;
     @Nullable protected LogSinkFunction logSinkFunction;
 
+    private boolean enableRandomChannelSelector = false;
+
     public FlinkSinkBuilder(Table table) {
         if (!(table instanceof FileStoreTable)) {
             throw new UnsupportedOperationException("Unsupported table type: " + table);
@@ -133,6 +135,15 @@ public class FlinkSinkBuilder {
     public FlinkSinkBuilder parallelism(int parallelism) {
         this.parallelism = parallelism;
         return this;
+    }
+
+    public FlinkSinkBuilder setEnableRandomChannelSelector(boolean enableRandomChannelSelector) {
+        this.enableRandomChannelSelector = enableRandomChannelSelector;
+        return this;
+    }
+
+    public boolean isEnableRandomChannelSelector() {
+        return enableRandomChannelSelector;
     }
 
     /** Clustering the input data if possible. */
@@ -275,11 +286,18 @@ public class FlinkSinkBuilder {
                             + " then the parallelism of writerOperator will be set to bucketNums.");
             parallelism = bucketNums;
         }
-        DataStream<InternalRow> partitioned =
-                partition(
-                        input,
-                        new RowDataChannelComputer(table.schema(), logSinkFunction != null),
-                        parallelism);
+
+        RowDataChannelComputer channelComputer = null;
+
+        if (enableRandomChannelSelector) {
+            LOG.info("Enable random channel selector for fixed bucket sink.");
+            channelComputer =
+                    new RandomSelectorRowDataChannelComputer(
+                            table.schema(), logSinkFunction != null);
+        } else {
+            channelComputer = new RowDataChannelComputer(table.schema(), logSinkFunction != null);
+        }
+        DataStream<InternalRow> partitioned = partition(input, channelComputer, parallelism);
         FixedBucketSink sink = new FixedBucketSink(table, overwritePartition, logSinkFunction);
         return sink.sinkFrom(partitioned);
     }
