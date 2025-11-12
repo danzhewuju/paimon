@@ -23,7 +23,6 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
-
 import org.junit.jupiter.api.Test;
 
 /**
@@ -40,7 +39,7 @@ public class PaimonTagTest {
 
         Configuration configuration = new Configuration();
         configuration.setInteger("rest.port", 8081);
-//        configuration.setString("execution.runtime-mode", "streaming");
+        //        configuration.setString("execution.runtime-mode", "streaming");
         configuration.setString("execution.runtime-mode", "batch");
         // checkpoint 配置
         configuration.setString("execution.checkpointing.mode", "EXACTLY_ONCE");
@@ -63,7 +62,6 @@ public class PaimonTagTest {
                 StreamTableEnvironment.create(
                         env, EnvironmentSettings.newInstance().inStreamingMode().build());
 
-
         tableEnv.executeSql(
                 "CREATE CATALOG hadoop_catalog WITH (\n"
                         + " 'type'='paimon',\n"
@@ -73,40 +71,41 @@ public class PaimonTagTest {
         tableEnv.executeSql("use catalog hadoop_catalog");
         tableEnv.executeSql("create database if not exists paimon_test");
         tableEnv.executeSql("use paimon_test");
-        tableEnv.executeSql("CALL sys.create_tag(`table` => 'paimon_test.paimon_user', `tag` => 'test_v7', `time_retained` => '7 d')");
+        tableEnv.executeSql(
+                "CALL sys.create_tag(`table` => 'paimon_test.paimon_user', `tag` => 'test_v7', `time_retained` => '7 d')");
         System.out.println("create tag success");
 
-
-//
-//        // paimon====================================================================
-//        tableEnv.executeSql(
-//                "CREATE TABLE IF NOT EXISTS paimon_user(\n"
-//                        + " id bigint, "
-//                        + " username STRING, "
-//                        + " password STRING, "
-//                        + " email STRING, "
-//                        + " created_at STRING,\n"
-//                        + "PRIMARY KEY (id) NOT ENFORCED"
-//                        + ") with ("
-//                        + " 'connector' = 'paimon'"
-//                        + ")\n");
-//
-//        tableEnv.executeSql(
-//                "CREATE TEMPORARY TABLE source (\n"
-//                        + " id int PRIMARY KEY NOT ENFORCED,\n"
-//                        + " name STRING,\n"
-//                        + " password STRING,\n"
-//                        + " email STRING,\n"
-//                        + " created_at as PROCTIME()\n"
-//                        + ") WITH (\n"
-//                        + " 'connector' = 'datagen', \n"
-//                        + " 'fields.id.kind' = 'sequence', "
-//                        + " 'fields.id.start' = '-2', "
-//                        + " 'fields.id.end' = '1000000', "
-//                        + " 'rows-per-second' = '10' \n"
-//                        + ")");
-//        tableEnv.executeSql(
-//                "insert into paimon_user select id, name, password, email, cast(created_at as String) from source ");
-//        Thread.currentThread().join();
+        //
+        //        // paimon====================================================================
+        //        tableEnv.executeSql(
+        //                "CREATE TABLE IF NOT EXISTS paimon_user(\n"
+        //                        + " id bigint, "
+        //                        + " username STRING, "
+        //                        + " password STRING, "
+        //                        + " email STRING, "
+        //                        + " created_at STRING,\n"
+        //                        + "PRIMARY KEY (id) NOT ENFORCED"
+        //                        + ") with ("
+        //                        + " 'connector' = 'paimon'"
+        //                        + ")\n");
+        //
+        //        tableEnv.executeSql(
+        //                "CREATE TEMPORARY TABLE source (\n"
+        //                        + " id int PRIMARY KEY NOT ENFORCED,\n"
+        //                        + " name STRING,\n"
+        //                        + " password STRING,\n"
+        //                        + " email STRING,\n"
+        //                        + " created_at as PROCTIME()\n"
+        //                        + ") WITH (\n"
+        //                        + " 'connector' = 'datagen', \n"
+        //                        + " 'fields.id.kind' = 'sequence', "
+        //                        + " 'fields.id.start' = '-2', "
+        //                        + " 'fields.id.end' = '1000000', "
+        //                        + " 'rows-per-second' = '10' \n"
+        //                        + ")");
+        //        tableEnv.executeSql(
+        //                "insert into paimon_user select id, name, password, email, cast(created_at
+        // as String) from source ");
+        //        Thread.currentThread().join();
     }
 }
