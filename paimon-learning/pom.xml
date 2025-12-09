@@ -24,7 +24,7 @@ under the License.
     <parent>
         <groupId>org.apache.paimon</groupId>
         <artifactId>paimon-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT-LEARNING</version>
     </parent>
 
     <artifactId>paimon-learning</artifactId>
@@ -155,7 +155,7 @@ under the License.
         <dependency>
             <groupId>org.apache.parquet</groupId>
             <artifactId>parquet-avro</artifactId>
-            <version>1.13.1</version>
+            <version>1.15.2</version>
         </dependency>
 
         <!-- 显式添加 janino 依赖来解决版本冲突 -->

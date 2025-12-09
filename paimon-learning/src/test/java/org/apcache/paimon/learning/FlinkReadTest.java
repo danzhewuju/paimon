@@ -21,6 +21,10 @@ package org.apcache.paimon.learning;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.TableEnvironment;
+import org.apache.flink.table.api.TableResult;
+import org.apache.flink.types.Row;
+import org.apache.flink.util.CloseableIterator;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,8 +43,8 @@ public class FlinkReadTest {
     @Test
     public void testPaimonRead() {
 
-        String host = "localhost";
-        String paimonWarehouse = String.format("hdfs://%s:9000/data/paimon/warehouse", host);
+        String paimonWarehouse =
+                "file" + "://" + "/Users/alex/Program/data/paimon/warehouse";
         EnvironmentSettings settings = EnvironmentSettings.newInstance().inBatchMode().build();
         TableEnvironment tableEnv = TableEnvironment.create(settings);
 
@@ -67,8 +71,23 @@ public class FlinkReadTest {
                         + " 'connector' = 'paimon'"
                         + ")\n");
 
-        Table result = tableEnv.sqlQuery("select * from paimon_user;");
+        tableEnv.executeSql("insert into paimon_user values (1, 'alex', '123456', 'alex@163.com', '2023-02-20 14:48:00')").collect();
 
-        result.execute().print();
+        tableEnv.executeSql("insert into paimon_user values (2, 'hao', '123456', 'hao@163.com', '2023-02-20 14:48:00')").collect();
+
+        TableResult tableResult = tableEnv.executeSql("select * from paimon_user;");
+        tableResult.print();
+
+        tableEnv.executeSql("delete from paimon_user where id = 1").collect();
+
+        tableResult = tableEnv.executeSql("select * from paimon_user;");
+        tableResult.print();
+
+        // compact
+//        CloseableIterator<Row> collect = tableEnv.executeSql("CALL sys.compact(`table` => 'paimon_test.paimon_user')").collect();
+//        while (collect.hasNext()) {
+//            System.out.println(collect.next());
+//        }
+
     }
 }
