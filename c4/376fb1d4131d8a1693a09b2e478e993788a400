@@ -1,0 +1,37 @@
+paimon-core/src/main/java/org/apache/paimon/io/RollingFileWriterImpl.java
+  s_6431e394f25f49::t_acd7bbb2b3d1d7 52,183,209
+  s_6431e394f25f49::t_826229f50788b5 181-182,184-186
+paimon-core/src/test/java/org/apache/paimon/io/RollingFileWriterTest.java
+  s_6431e394f25f49::t_0a04f4215b46b5 27-28,149
+  s_6431e394f25f49::t_b8a3fc3a558288 360
+  s_6431e394f25f49::t_8d1c48c485a5f2 53,56-57,148,150-183,357-359,361-367
+paimon-core/src/test/java/org/apache/paimon/mergetree/MergeTreeWriterCloseFailureTest.java
+  s_6431e394f25f49::t_b8a3fc3a558288 163
+  s_6431e394f25f49::t_0a04f4215b46b5 57
+  s_6431e394f25f49::t_8d1c48c485a5f2 30-32,42,53-54,75-78,81-87,127,158-162,164-195
+  s_6431e394f25f49::t_acd7bbb2b3d1d7 33,79-80,92-93,109,123
+paimon-core/src/main/java/org/apache/paimon/mergetree/MergeTreeWriter.java
+  s_6431e394f25f49::t_b8a3fc3a558288 243
+  s_6431e394f25f49::t_826229f50788b5 42,226,233-234,240-242,244-248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.44-trip",
+  "base_commit_sha": "c4376fb1d4131d8a1693a09b2e478e993788a400",
+  "prompts": {},
+  "humans": {
+    "h_8764da84552be4": {
+      "author": "danzhewuju <1668926294@qq.com>"
+    }
+  },
+  "sessions": {
+    "s_6431e394f25f49": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0af2e-f830-7ef3-b417-32d340e46d98",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "danzhewuju <1668926294@qq.com>"
+    }
+  }
+}
