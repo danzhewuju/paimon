@@ -1,0 +1,27 @@
+paimon-common/src/test/java/org/apache/paimon/casting/CastedRowTest.java
+  s_d9979e2115f53b::t_3a8eec8d728ca3 1-79,81-117
+  s_d9979e2115f53b::t_a5179ec99fe6b8 80
+paimon-common/src/main/java/org/apache/paimon/casting/CastedRow.java
+  h_8764da84552be4 79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "386138482acafc589dec071c376b3c5c9c372547",
+  "prompts": {},
+  "humans": {
+    "h_8764da84552be4": {
+      "author": "danzhewuju <1668926294@qq.com>"
+    }
+  },
+  "sessions": {
+    "s_d9979e2115f53b": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-014ac343-698a-46e9-b87c-cf6736975c18",
+        "model": "auto/gpt-6.1-sol"
+      },
+      "human_author": null
+    }
+  }
+}
