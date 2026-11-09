@@ -1,0 +1,28 @@
+paimon-common/src/main/java/org/apache/paimon/utils/DateTimeUtils.java
+  h_8764da84552be4 671
+paimon-common/src/test/java/org/apache/paimon/casting/CastExecutorTest.java
+  s_fc505960527e01::t_a4699f819caa78 938
+  s_fc505960527e01::t_51169e1409670d 919-931,933-937,939,941-962
+  h_8764da84552be4 932,940
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "5532d6dd66fc88793be06972f56056a392367ba3",
+  "prompts": {},
+  "humans": {
+    "h_8764da84552be4": {
+      "author": "danzhewuju <1668926294@qq.com>"
+    }
+  },
+  "sessions": {
+    "s_fc505960527e01": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-9e0db306-5d22-4202-add3-07f3f4f8ad4c",
+        "model": "auto/gpt-6.1-sol"
+      },
+      "human_author": null
+    }
+  }
+}
