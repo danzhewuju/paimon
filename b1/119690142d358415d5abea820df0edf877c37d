@@ -1,0 +1,23 @@
+paimon-common/src/test/java/org/apache/paimon/predicate/RowIdPredicateVisitorTest.java
+  s_c07cbe5470b584::t_c5a56877736693 37
+  s_c07cbe5470b584::t_2f75d557d0f0b2 123-124
+  s_c07cbe5470b584::t_ef55ca08d46cd4 88-122,125-145
+paimon-common/src/main/java/org/apache/paimon/predicate/RowIdPredicateVisitor.java
+  s_c07cbe5470b584::t_3683a67629a75c 59-61,66-68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "b1119690142d358415d5abea820df0edf877c37d",
+  "prompts": {},
+  "sessions": {
+    "s_c07cbe5470b584": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-3f04f6ae-b4b4-4661-80fc-600204850708",
+        "model": "auto/gpt-6.1-sol"
+      },
+      "human_author": null
+    }
+  }
+}
