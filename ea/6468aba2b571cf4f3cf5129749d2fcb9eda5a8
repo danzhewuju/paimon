@@ -1,0 +1,23 @@
+paimon-common/src/test/java/org/apache/paimon/predicate/RowIdPredicateVisitorTest.java
+  s_c07cbe5470b584::t_c5a56877736693 37
+  s_c07cbe5470b584::t_ef55ca08d46cd4 88-122,125-145
+  s_c07cbe5470b584::t_2f75d557d0f0b2 123-124
+paimon-common/src/main/java/org/apache/paimon/predicate/RowIdPredicateVisitor.java
+  s_c07cbe5470b584::t_3683a67629a75c 59-61,66-68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "ea6468aba2b571cf4f3cf5129749d2fcb9eda5a8",
+  "prompts": {},
+  "sessions": {
+    "s_c07cbe5470b584": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-3f04f6ae-b4b4-4661-80fc-600204850708",
+        "model": "auto/gpt-6.1-sol"
+      },
+      "human_author": "danzhewuju <1668926294@qq.com>"
+    }
+  }
+}
