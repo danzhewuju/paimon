@@ -1,0 +1,23 @@
+paimon-common/src/test/java/org/apache/paimon/fs/VectoredReadUtilsTest.java
+  s_6ab61fc61f1db9::t_6f43b5e0f07dc8 159-161,163-168
+  s_6ab61fc61f1db9::t_8163cc6b86053f 162
+  s_6ab61fc61f1db9::t_79fccf9e14b2d3 23
+paimon-common/src/main/java/org/apache/paimon/fs/VectoredReadable.java
+  s_6ab61fc61f1db9::t_ec4c39870a1a9e 43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "209fe769b5a7dcc810abb2e03132628a461c93ae",
+  "prompts": {},
+  "sessions": {
+    "s_6ab61fc61f1db9": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-39fddbaf-db7a-42ba-93ba-78ace776fb84",
+        "model": "kiro/gpt-5.6-sol"
+      },
+      "human_author": "Alex <1668926294@qq.com>"
+    }
+  }
+}
