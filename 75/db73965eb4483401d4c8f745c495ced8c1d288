@@ -1,0 +1,14 @@
+paimon-common/src/main/java/org/apache/paimon/predicate/RowIdPredicateVisitor.java
+  h_8764da84552be4 66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "75db73965eb4483401d4c8f745c495ced8c1d288",
+  "prompts": {},
+  "humans": {
+    "h_8764da84552be4": {
+      "author": "danzhewuju <1668926294@qq.com>"
+    }
+  }
+}
