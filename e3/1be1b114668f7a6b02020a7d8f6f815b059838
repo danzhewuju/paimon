@@ -1,0 +1,26 @@
+paimon-core/src/test/java/org/apache/paimon/table/system/BinlogTableTest.java
+  s_e242e4856ecad6::t_e5d4594dd38324 169
+  s_e242e4856ecad6::t_ab0e111c8dcb2f 131-168,170-193
+  s_e242e4856ecad6::t_bbc8cb02496f52 27
+  s_e242e4856ecad6::t_cca98541e63020 40,42-44
+  s_e242e4856ecad6::t_a41334a365900f 57
+paimon-core/src/main/java/org/apache/paimon/table/system/BinlogTable.java
+  s_e242e4856ecad6::t_0479367bfce77e 135-140
+  s_e242e4856ecad6::t_7bd4905fa5b43a 146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "e31be1b114668f7a6b02020a7d8f6f815b059838",
+  "prompts": {},
+  "sessions": {
+    "s_e242e4856ecad6": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-698b12d0-92eb-4bf4-b53e-586fed680dae",
+        "model": "codex/gpt-6-astra"
+      },
+      "human_author": "Alex <1668926294@qq.com>"
+    }
+  }
+}
