@@ -1,0 +1,23 @@
+paimon-common/src/test/java/org/apache/paimon/utils/DecimalUtilsTest.java
+  s_f267623cfc1ff6::t_ef95e7e60bf774 59-60,68-69,72-74
+  s_f267623cfc1ff6::t_2ed7f1b874648c 1-58,61-67,70-71,75-80
+paimon-common/src/main/java/org/apache/paimon/utils/DecimalUtils.java
+  s_f267623cfc1ff6::t_c85cede51c80f8 61-63
+  s_f267623cfc1ff6::t_1a09274fa1e8b7 82-84
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "c0b553a9c3d14fb6512fb39adb29d3cb4e488839",
+  "prompts": {},
+  "sessions": {
+    "s_f267623cfc1ff6": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-02439ce3-2600-4adc-a40c-e447dcfd183a",
+        "model": "codex/gpt-6.1-sol"
+      },
+      "human_author": "Alex <1668926294@qq.com>"
+    }
+  }
+}
