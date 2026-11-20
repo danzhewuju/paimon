@@ -1,0 +1,27 @@
+paimon-flink/paimon-flink-common/src/main/java/org/apache/paimon/flink/procedure/CreateTagProcedure.java
+  s_a0b7064ac998de::t_97f94ac90dfd33 38-44
+paimon-flink/paimon-flink-1.18/src/main/java/org/apache/paimon/flink/procedure/CreateTagProcedure.java
+  s_a0b7064ac998de::t_97f94ac90dfd33 38-44
+paimon-spark/paimon-spark-common/src/main/java/org/apache/paimon/spark/procedure/CreateTagProcedure.java
+  s_a0b7064ac998de::t_97f94ac90dfd33 36-42
+paimon-flink/paimon-flink-common/src/test/java/org/apache/paimon/flink/procedure/ExpireTagsProcedureITCase.java
+  s_a0b7064ac998de::t_e1a3a10ec99136 42-61
+  s_a0b7064ac998de::t_68c7b29c037b57 41
+  s_a0b7064ac998de::t_e2c860b0c22b1d 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "74a28599668c9b17c8284dffff955510d643665c",
+  "prompts": {},
+  "sessions": {
+    "s_a0b7064ac998de": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-67dfec14-26f5-4bc2-905d-16a0efd838aa",
+        "model": "codex/gpt-6.2-sol"
+      },
+      "human_author": "Alex <1668926294@qq.com>"
+    }
+  }
+}
