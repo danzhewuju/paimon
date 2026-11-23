@@ -1,0 +1,26 @@
+paimon-spark/paimon-spark-common/src/main/scala/org/apache/paimon/spark/sources/PaimonMicroBatchStream.scala
+  s_368d1b9ff2ca03::t_63eb4b2516574e 78
+  s_368d1b9ff2ca03::t_323e9ae0b4a33c 127-133
+  s_368d1b9ff2ca03::t_99b81a6e3b9532 140
+  s_368d1b9ff2ca03::t_4bc22aef4fd72a 181-183
+paimon-spark/paimon-spark-ut/src/test/scala/org/apache/paimon/spark/sources/PaimonMicroBatchStreamITCase.scala
+  s_368d1b9ff2ca03::t_29855f9200058d 578
+  s_368d1b9ff2ca03::t_773a312f539a34 32
+  s_368d1b9ff2ca03::t_deb52167e5b259 571-577,579-587
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "a52863e2b798dd238df1fb673a7e6249c30f57fc",
+  "prompts": {},
+  "sessions": {
+    "s_368d1b9ff2ca03": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-beac04ee-493b-439f-bb4e-11173cced587",
+        "model": "codex/gpt-6.2-sol"
+      },
+      "human_author": "Alex <1668926294@qq.com>"
+    }
+  }
+}
