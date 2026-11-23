@@ -1,0 +1,21 @@
+paimon-flink/paimon-flink-common/src/test/java/org/apache/paimon/flink/sink/FlinkFormatTableDataStreamSinkTest.java
+  s_1d376815c6652e::t_a51fb5b5ade67f 138-151
+paimon-flink/paimon-flink-common/src/main/java/org/apache/paimon/flink/sink/FlinkFormatTableDataStreamSink.java
+  s_1d376815c6652e::t_a51fb5b5ade67f 145-148,151
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "75740b5ef5b0e4093e67f703aeaaea65b2c45de7",
+  "prompts": {},
+  "sessions": {
+    "s_1d376815c6652e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a206e9-4578-73c0-b29c-4eff20be29a8",
+        "model": "codex/gpt-6.2-sol"
+      },
+      "human_author": "Alex <1668926294@qq.com>"
+    }
+  }
+}
