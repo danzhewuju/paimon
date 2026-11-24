@@ -1,0 +1,33 @@
+paimon-core/src/test/java/org/apache/paimon/table/SchemaEvolutionTest.java
+  s_8034442cb6b027::t_3d798b4d795dc8 1134-1136
+  s_8034442cb6b027::t_b4283229f95e3b 1141
+  h_4763bf4202202c 1125-1126,1137-1138,1150,1156-1157,1161,1165
+  s_8034442cb6b027::t_4011ce5c32838d 1159-1160,1169,1174
+  s_8034442cb6b027::t_587aa070e811b7 1171-1173
+  s_8034442cb6b027::t_22a9b3bf2accb1 23
+  s_8034442cb6b027::t_54052791118ed6 1127-1133,1139-1140,1142-1149,1151-1155,1158,1162-1164,1166-1168,1170,1175-1177
+paimon-core/src/main/java/org/apache/paimon/schema/SchemaManagerUtils.java
+  h_4763bf4202202c 611
+  s_8034442cb6b027::t_72d115b5e864b1 612-613,625
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.52-trip",
+  "base_commit_sha": "478a5e3fe3e272f899f280182d61f8ef3247f474",
+  "prompts": {},
+  "humans": {
+    "h_4763bf4202202c": {
+      "author": "Alex <1668926294@qq.com>"
+    }
+  },
+  "sessions": {
+    "s_8034442cb6b027": {
+      "agent_id": {
+        "tool": "deepseekharness",
+        "id": "session-a21bbc20-023f-4816-ae69-e6acc60c514a",
+        "model": "codex/gpt-6.2-sol"
+      },
+      "human_author": null
+    }
+  }
+}
